@@ -99,11 +99,6 @@ namespace Tamagotchi.Models
       return _tamagotchis.Find(x => x.Id == id);
     }
 
-    // public static Pet Find(int searchId)
-    // {
-    //   return _tamagotchis[searchId - 1];
-    // }
-
     public static void DeletePet(int searchId)
     {
       _tamagotchis.Remove(Pet.GetTamagotchi(searchId));

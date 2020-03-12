@@ -1,87 +1,98 @@
-@using Tamagotchi.Models;
-@using System.Collections.Generic;
+@using Tamagotchi.Models; 
 
-@{
-  Layout = "_Layout";
-}
-
-<div class="container">
-<h1>Tamagotchi World</h1>
-
-@* buttons/links with actions *@
-<div class="form-group">
-<form action="/pets/updateall" method="post">
-  <button class="btn btn-large btn-warning" type="submit" name="button">Increase Time</button>
-</form>
-
-<a class="btn btn-large btn-success" href="/pets/new">Make a new Tamagotchi!</a>
-
-<form action="/pets/delete/all" method="post">
-  <button class="btn btn-large btn-danger" type="submit" name="button">Remove all Pets</button>
-</form>
+@{ Layout = "_Layout"; }
+<div class="spacer">
+  <div id="new-tamagotchi">
+    <a class="btn btn-large btn-success" href="/pets/new">Make a new Tamagotchi!</a>
+  </div>
 </div>
-
-@* list of all tamagotchis and stats *@
-<h3>Tamagotchis</h3>
-
-@if (@Model.Count == 0)
-{
-  <p>There are no tamagotchis right now.</p>
-} 
-
-@foreach (Pet pet in @Model)
-  {
-    <div class="pet-container">
-
-      <div class="pet-name">
-        <h2><a href="/pets/@pet.Id/show">@pet.Name</a></h2>
-        <form action="/pets/@pet.Id/Delete" method="post">
-          <input name="Id" type="hidden" value="@pet.Id">
-          <button class="btn btn-danger" type="submit">Delete</button>
-        </form>
-      </div>
-
-      @if (@pet.IsTamagotchiDead())
-      {
-        <p>This pet has died.</p>
-        <div id="sadpet">
-        </div>
-      } else {
-
-        <div class="pet-property form-group">
-          <form action="/pets/@pet.Id/Food" method="post">
-            <div class="pet-property-display form-group">
-              <input name="Id" type="hidden" value="@pet.Id">
-              <p>Food Level: <span>@pet.Food</span>
-              <button class="btn btn-primary" type="submit">Feed</button></p>
-            </div> 
-          </form>    
-        </div>
-
-        <div class="pet-property">
-          <form action="/pets/@pet.Id/Sleep" method="post">
-            <div class="pet-property-display form-group">
-              <input name="Id" type="hidden" value="@pet.Id">
-              <p>Rest Level: <span>@pet.Sleep</span>
-              <button class="btn btn-primary" type="submit">Sleep</button></p>
-            </div>
-          </form>
-        </div>
-
-        <div class="pet-property">
-          <form action="/pets/@pet.Id/Attention" method="post">
-            <div class="pet-property-display  form-group">
-              <input name="Id" type="hidden" value="@pet.Id">
-              <p>Care Level: <span>@pet.Attention</span>
-              <button class="btn btn-primary" type="submit">Play</button></p>
-            </div>
-          </form>
-        </div>
-        <div class="pet-image">
-        </div>
-
-      }
+  
+  @if (@Model.Count == 0) {
+    <br>
+  <h1>There are no tamagotchis right now.</h1>
+  
+  } else {
+    <div id="title">
+      <h1>My Tamagotchis</h1>
     </div>
-  }
+    <div class="row">
+      <div class="col-6">
+        <div class="header-option">
+      <form action="/pets/updateall" method="post">
+        <button class="btn btn-large btn-warning" type="submit" name="button">
+          Increase Time
+        </button>
+      </form>
+    </div> 
+      </div>
+      <div class="col-6">
+        <div class="header-option">
+          <form action="/pets/delete/all" method="post">
+            <button id="delete-all-pets" class="btn btn-large btn-danger" type="submit"  name="button">
+            Remove all Pets
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+     @foreach (Pet pet in @Model) {
+       <div class="pet-container">
+    @if (@pet.IsTamagotchiDead()) {
+    <p>This pet has died.</p>
+    <div id="sadpet"></div>
+    } else {
+  <div class="row">
+    <div class="col-9">
+      <div class="pet-name">
+      <h2><a href="/pets/@pet.Id/show">@pet.Name</a></h2>
+      <form action="/pets/@pet.Id/Delete" method="post">
+        <input name="Id" type="hidden" value="@pet.Id" />
+        <button class="btn btn-danger delete-pet-button" type="submit">Delete</button>
+      </form>
+    </div>
+    <div class="pet-property">
+      <form action="/pets/@pet.Id/Food" method="post">
+        <div class="form-group">
+          <input name="Id" type="hidden" value="@pet.Id" />
+          <p>
+            Food Level: <span>@pet.Food</span>
+            <button class="btn btn-primary" type="submit">Feed</button>
+          </p>
+        </div>
+      </form>
+    </div>
 
-</div>
+    <div class="pet-property">
+      <form action="/pets/@pet.Id/Sleep" method="post">
+        <div class="form-group">
+          <input name="Id" type="hidden" value="@pet.Id" />
+          <p>
+            Rest Level: <span>@pet.Sleep</span>
+            <button class="btn btn-primary" type="submit">Sleep</button>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <div class="pet-property">
+      <form action="/pets/@pet.Id/Attention" method="post">
+        <div class="form-group">
+          <input name="Id" type="hidden" value="@pet.Id" />
+          <p>
+            Care Level: <span>@pet.Attention</span>
+            <button class="btn btn-primary" type="submit">Play</button>
+          </p>
+        </div>
+      </form>
+    </div>
+    </div>
+    <div class="col-3">
+      <div class="pet-image"></div>
+    </div>
+  </div>
+    }
+  </div>
+  }
+}
+  
+ 
